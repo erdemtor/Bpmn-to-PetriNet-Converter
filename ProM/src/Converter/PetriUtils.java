@@ -22,9 +22,8 @@ public class PetriUtils {
             for(Petri tempPetri : ptrList){
                 result.getPlaces().addAll(tempPetri.getPlaces());
                 result.getTransitions().addAll(tempPetri.getTransitions());
-                Transition xorTransition = new Transition("xor-invisible",result);
-                getLastPlace(result).getOutgoingTransitions().add(xorTransition);
-                xorTransition.getTargetPlaces().add(tempPetri.firstPlace());
+                removeLastPlace(tempPetri);
+                getLastTransition(tempPetri).getTargetPlaces().add(joinPlace);
             }
         }
         if (splitType.equals("and-split")) {
