@@ -28,8 +28,8 @@ public class ConverterPlugin {
     @PluginVariant(variantLabel = "Convert BPMN into PN", requiredParameterLabels = {0})
     public static Petrinet optimizeDiagram(UIPluginContext context, BPMNDiagram diagram) {
         Petrinet pn = null;
-        BPMNInputConverter converter = new BPMNInputConverter(diagram);
-        BPMN bpmn = converter.getResultBPMN();
+        BPMNInputConverter inputConverter = new BPMNInputConverter(diagram);
+        BPMN bpmn = inputConverter.getResultBPMN();
         System.out.println(bpmn.toString());
 //        MyBPMNModel myBPMNModel = getMyBPMNModel(diagram);
 //        pn = MyConverter.getPN(myBPMNModel);
