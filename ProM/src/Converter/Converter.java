@@ -17,7 +17,7 @@ public class Converter {
     }
     public static Tuple recConvert(Node current) {
         Petri result = new Petri();
-        result.getPlaces().add(new Place(current.toString(),"",result));
+       new Place(current.toString(),"",result);
         while(!(current instanceof Event && current.getType().equals("end"))) {
             if (current instanceof Gateway) {
                 if (current.getType().contains("split")) {
@@ -50,7 +50,6 @@ public class Converter {
                 getLastPlace(result).getOutgoingTransitions().addAll(getStartPlace(tempPetri).getOutgoingTransitions());
             }
             Place joinPlace = new Place("JoinPlace","", result);
-            result.getPlaces().add(joinPlace);
             for(Petri tempPetri : ptrList){
                 result.getPlaces().addAll(tempPetri.getPlaces());
                 result.getTransitions().addAll(tempPetri.getTransitions());
@@ -61,12 +60,10 @@ public class Converter {
         if (splitType.equals("and-split")) {
             Transition andSplitTransition = new Transition("ANDSPLIT",result);
             getLastPlace(result).getOutgoingTransitions().add(andSplitTransition);
-            result.getTransitions().add(andSplitTransition);
             for(Petri tempPetri : ptrList){
                 getLastTransition(result).getTargetPlaces().add(tempPetri.firstPlace());
             }
             Transition joinTransition = new Transition("ANDJOIN",result);
-            result.getTransitions().add(joinTransition);
             for(Petri tempPetri : ptrList){
                 result.getPlaces().addAll(tempPetri.getPlaces());
                 result.getTransitions().addAll(tempPetri.getTransitions());
@@ -88,8 +85,6 @@ public class Converter {
             Place plc = new Place(current.toString(),"", petri);
             tra.getTargetPlaces().add(plc);
             getLastPlace(petri).getOutgoingTransitions().add(tra);
-            petri.getPlaces().add(plc);
-            petri.getTransitions().add(tra);
         }
     }
     public static Place getStartPlace(Petri petri) {

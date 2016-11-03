@@ -32,11 +32,9 @@ public class Application {
     public static SequenceFlow initializer(BPMN bpmn){
         Event start = new Event("start" ,bpmn);
         start.setSourceFlow(null);
-        SequenceFlow flow = new SequenceFlow();
+        SequenceFlow flow = new SequenceFlow(bpmn);
         flow.setSourceNode(start);
         start.setTargetFlow(flow);
-        bpmn.getNodes().add(start);
-        bpmn.getFlows().add(flow);
         return flow;
     }
     public static void finalizer(BPMN bpmn, SequenceFlow lastFlow){
@@ -50,12 +48,10 @@ public class Application {
     public static SequenceFlow addNodeAndFlow(BPMN bpmn, SequenceFlow lastFlow, int taskname){
         Simple task = new Simple(taskname+"",bpmn);
         lastFlow.setTargetNode(task);
-        SequenceFlow newSequenceFlow = new SequenceFlow();
+        SequenceFlow newSequenceFlow = new SequenceFlow(bpmn);
         task.setTargetFlow(newSequenceFlow);
         task.setSourceFlow(lastFlow);
         newSequenceFlow.setSourceNode(task);
-        bpmn.getNodes().add(task);
-        bpmn.getFlows().add(newSequenceFlow);
         return newSequenceFlow;
     }
 }

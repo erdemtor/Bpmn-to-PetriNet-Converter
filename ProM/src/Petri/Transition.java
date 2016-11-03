@@ -15,6 +15,7 @@ public class Transition
     public Transition(String label, Petri ownerPetri) {
         Label = label;
         this.ownerPetri = ownerPetri;
+        ownerPetri.getTransitions().add(this);
     }
 
     private Petri ownerPetri;
