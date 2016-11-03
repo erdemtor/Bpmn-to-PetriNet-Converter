@@ -19,7 +19,7 @@ public class BPMNInputConverter {
         bpmn = new BPMN();
         Collection<Flow> inputFlows = input.getFlows();
         for (Flow f : inputFlows) {
-            SequenceFlow sequenceFlow = new SequenceFlow();
+            SequenceFlow sequenceFlow = new SequenceFlow(bpmn);
 
             handleSource(f, sequenceFlow);
             handleTarget(f, sequenceFlow);
