@@ -16,7 +16,7 @@ public class Place {
 
 	public Place(String LABEL, String type, Petri ownerPetri) {
 		this.LABEL = LABEL;
-		Type = type;
+		this.Type = type;
 		this.ownerPetri = ownerPetri;
 		ownerPetri.getPlaces().add(this);
 	}

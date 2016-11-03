@@ -16,24 +16,32 @@ public class Application {
 
 
     public static void main(String[] args) {
-        BPMN bpmn = createFullBpmn();
+        BPMN bpmn = createFullBpmn(true);
+
         System.out.println();
         Petri p = Converter.convert(bpmn);
         System.out.println();
 
     }
 
-    public static BPMN createFullBpmn(){
+    public static BPMN createFullBpmn(boolean withSub){
         BPMN bpmn = new BPMN();
         SequenceFlow lastFlow = initializer(bpmn);
         lastFlow = addNodeAndFlow(bpmn, lastFlow, 1);
-        lastFlow = addNodeAndFlow(bpmn, lastFlow, 2);
+       if(withSub){
+           Compound task = new Compound("SUB", bpmn);
+           task.setSubBpmn(createFullBpmn(false));
+           lastFlow.setTargetNode(task);
+           task.setSourceFlow(lastFlow);
+           lastFlow = new SequenceFlow(bpmn);
+           lastFlow.setSourceNode(task);
+           task.setTargetFlow(lastFlow);
+       }
         List<SequenceFlow> outFlows = addOutGateway(bpmn,lastFlow,2,"and-split");
         int i =1;
         List<SequenceFlow> joiningFlows = new ArrayList<>();
         for (SequenceFlow f: outFlows) {
             lastFlow = addNodeAndFlow(bpmn,f, 30 +i);
-            lastFlow = addNodeAndFlow(bpmn,lastFlow, 40 + i);
             joiningFlows.add(lastFlow);
             i++;
         }
@@ -81,7 +89,6 @@ public class Application {
         Event end = new Event("end", bpmn);
         lastFlow.setTargetNode(end);
         end.setSourceFlow(lastFlow);
-        bpmn.getNodes().add(end);
     }
 
 

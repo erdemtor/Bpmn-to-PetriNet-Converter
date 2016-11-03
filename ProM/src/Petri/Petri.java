@@ -3,7 +3,6 @@ package Petri;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @(#) Petri.Petri.java
@@ -37,6 +36,7 @@ public class Petri
                 .collect(Collectors.toList());
        return places.stream().filter(place -> !placesWithIncoming.contains(place)).findFirst().get();
     }
+
 
 
 }
