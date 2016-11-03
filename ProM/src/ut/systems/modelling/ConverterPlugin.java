@@ -1,6 +1,8 @@
 package ut.systems.modelling;
 
 import BPMN.*;
+import Petri.*;
+import Converter.Converter;
 import org.processmining.contexts.uitopia.UIPluginContext;
 import org.processmining.contexts.uitopia.annotations.UITopiaVariant;
 import org.processmining.framework.plugin.annotations.Plugin;
@@ -31,9 +33,8 @@ public class ConverterPlugin {
         BPMNInputConverter inputConverter = new BPMNInputConverter(diagram);
         BPMN bpmn = inputConverter.getResultBPMN();
         System.out.println(bpmn.toString());
-//        MyBPMNModel myBPMNModel = getMyBPMNModel(diagram);
-//        pn = MyConverter.getPN(myBPMNModel);
-
+        Petri p = Converter.convert(bpmn);
+        System.out.println(p);
         return pn;
     }
 }

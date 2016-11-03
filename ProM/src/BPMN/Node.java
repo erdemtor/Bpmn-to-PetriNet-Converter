@@ -61,12 +61,4 @@ public class Node
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return "Node{" +
-				"type='" + type + '\'' +
-				", sourceFlow=" + sourceFlow +
-				", targetFlow=" + targetFlow +
-				'}';
-	}
 }

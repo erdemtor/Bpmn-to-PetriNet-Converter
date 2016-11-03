@@ -46,11 +46,22 @@ public class Converter {
             else {
                 PetriUtils.convertAndAdd(result, current);
             }
-            if(current.getTargetFlow() == null) break;
-            current = current.getNextNode();
+            if (current instanceof Gateway) {
+               Gateway casted = (Gateway) current;
+                current = casted.getNextNode();
+            }else {
+                if(current.getTargetFlow() == null) break;
+                current = current.getNextNode();
+            }
+
         }
-        Transition last = PetriUtils.getLastTransition(result);
-        last.getTargetPlaces().add(new Place(current.toString(),"end",result));
+        Place last = PetriUtils.getLastPlace(result);
+        if (last!=null){
+            Transition forEnding = new Transition("beforeEnd", result);
+            last.getOutgoingTransitions().add(forEnding);
+            Place endplace = new Place("end","end", result);
+            forEnding.getTargetPlaces().add(endplace);
+        }
         return new Tuple(result, current);
     }
 

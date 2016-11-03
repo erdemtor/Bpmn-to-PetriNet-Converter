@@ -20,7 +20,10 @@ public class Gateway extends Node
 		super(ownerBpmn);
 
 	}
-
+    @Override
+    public Node getNextNode(){
+       return this.getTargetFlows().get(0).getTargetNode();
+    }
 	public String getType( ) {
 		return type;
 	}

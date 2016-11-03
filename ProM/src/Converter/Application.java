@@ -16,7 +16,7 @@ public class Application {
 
 
     public static void main(String[] args) {
-        BPMN bpmn = createFullBpmn(true);
+        BPMN bpmn = createFullBpmn(false);
 
         System.out.println();
         Petri p = Converter.convert(bpmn);
@@ -24,13 +24,20 @@ public class Application {
 
     }
 
+    public static BPMN small(){
+        BPMN bpmn = new BPMN();
+        SequenceFlow lastFlow = initializer(bpmn);
+        lastFlow = addNodeAndFlow(bpmn, lastFlow, 1);
+        finalizer(bpmn, lastFlow);
+        return bpmn;
+    }
     public static BPMN createFullBpmn(boolean withSub){
         BPMN bpmn = new BPMN();
         SequenceFlow lastFlow = initializer(bpmn);
         lastFlow = addNodeAndFlow(bpmn, lastFlow, 1);
        if(withSub){
            Compound task = new Compound("SUB", bpmn);
-           task.setSubBpmn(createFullBpmn(false));
+           task.setSubBpmn(small());
            lastFlow.setTargetNode(task);
            task.setSourceFlow(lastFlow);
            lastFlow = new SequenceFlow(bpmn);
