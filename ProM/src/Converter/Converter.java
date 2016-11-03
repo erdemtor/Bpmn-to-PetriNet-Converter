@@ -56,11 +56,8 @@ public class Converter {
 
         }
         Place last = PetriUtils.getLastPlace(result);
-        if (last!=null){
-            Transition forEnding = new Transition("beforeEnd", result);
-            last.getOutgoingTransitions().add(forEnding);
-            Place endplace = new Place("end","end", result);
-            forEnding.getTargetPlaces().add(endplace);
+        if (last != null) {
+          last.setLABEL("end");
         }
         return new Tuple(result, current);
     }
