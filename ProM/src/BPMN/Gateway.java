@@ -11,8 +11,13 @@ public class Gateway extends Node
 	private List<SequenceFlow> targetFlows;
 	private String type;
 
+	public Gateway(BPMN ownerBpmn, String type) {
+		super(ownerBpmn);
+		this.type = type;
+	}
 	public Gateway(BPMN ownerBpmn) {
 		super(ownerBpmn);
+
 	}
 
 	public String getType( ) {

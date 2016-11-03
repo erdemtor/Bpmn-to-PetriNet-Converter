@@ -22,9 +22,9 @@ public class Application {
     public static BPMN createFullBpmn(){
         BPMN bpmn = new BPMN();
         SequenceFlow lastFlow = initializer(bpmn);
-        for (int i = 0; i <10 ; i++) {
-            lastFlow = addNodeAndFlow(bpmn, lastFlow, i);
-        }
+        lastFlow = addNodeAndFlow(bpmn, lastFlow, 1);
+        lastFlow = addNodeAndFlow(bpmn, lastFlow, 2);
+
         finalizer(bpmn, lastFlow);
         return bpmn;
     }
@@ -36,6 +36,12 @@ public class Application {
         flow.setSourceNode(start);
         start.setTargetFlow(flow);
         return flow;
+    }
+
+    public static void addGateway(BPMN bpmn, SequenceFlow lastFlow){
+        Gateway andSplit = new Gateway(bpmn);
+
+
     }
     public static void finalizer(BPMN bpmn, SequenceFlow lastFlow){
         Event end = new Event("end", bpmn);
