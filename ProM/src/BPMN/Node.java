@@ -5,6 +5,8 @@ package BPMN;
  */
 public class Node
 {
+	private int id;
+
 	public BPMN getOwnerBpmn() {
 		return ownerBpmn;
 	}
@@ -51,10 +53,20 @@ public class Node
 		this.targetFlow = targetFlow;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
 		return "Node{" +
 				"type='" + type + '\'' +
+				", sourceFlow=" + sourceFlow +
+				", targetFlow=" + targetFlow +
 				'}';
 	}
 }

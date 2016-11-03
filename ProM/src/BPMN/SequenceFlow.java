@@ -44,8 +44,8 @@ public class SequenceFlow
 	@Override
 	public String toString() {
 		return "SequenceFlow{" +
-				"targetNode=" + targetNode +
-				", sourceNode=" + sourceNode +
+				"sourceNode=" + sourceNode.type	 +
+				", targetNode=" + targetNode.type +
 				'}';
 	}
 }
