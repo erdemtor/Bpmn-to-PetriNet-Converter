@@ -2,6 +2,7 @@ package BPMN;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @(#) BPMN.BPMN.java
@@ -43,6 +44,17 @@ public class BPMN {
 
 	public void setOwnerCompound(Compound ownerCompound) {
 		this.ownerCompound = ownerCompound;
+	}
+
+	public Event getStartEvent(){
+
+		return (Event) this.getNodes().stream().filter(n -> {
+			if (n instanceof Event){
+				Event e = (Event) n;
+				return e.type.equals("start");
+			}
+			return false;
+		}).collect(Collectors.toList()).get(0);
 	}
 }
 
