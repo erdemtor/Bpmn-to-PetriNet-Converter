@@ -13,6 +13,11 @@ public class SequenceFlow
 		this.ownerBpmn = ownerBpmn;
 	}
 
+	public SequenceFlow(BPMN ownerBpmn) {
+		this.ownerBpmn = ownerBpmn;
+		ownerBpmn.getFlows().add(this);
+	}
+
 	private BPMN ownerBpmn;
 	private Node targetNode;
 	

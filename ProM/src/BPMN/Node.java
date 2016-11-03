@@ -24,6 +24,7 @@ public class Node
 
 	public Node(BPMN ownerBpmn) {
 		this.ownerBpmn = ownerBpmn;
+		ownerBpmn.getNodes().add(this);
 	}
 
 	private BPMN ownerBpmn;
