@@ -37,7 +37,7 @@ public class BPMNInputConverter {
 
     private void arrangeGatewayTypes(BPMN bpmn) {
         bpmn.getNodes().stream().filter(n -> n instanceof Gateway).filter(g -> ((Gateway)g).getTargetFlows().size() > 1).forEach(splitGate -> splitGate.setType(splitGate.getType() + "-split"));
-        bpmn.getNodes().stream().filter(n -> n instanceof Gateway).filter(g -> ((Gateway)g).getSourceFlows().size() > 1).forEach(splitGate -> splitGate.setType(splitGate.getType() + "-split"));
+        bpmn.getNodes().stream().filter(n -> n instanceof Gateway).filter(g -> ((Gateway)g).getSourceFlows().size() > 1).forEach(joinGate -> joinGate.setType(joinGate.getType() + "-join"));
     }
 
     BPMN getResultBPMN() {
