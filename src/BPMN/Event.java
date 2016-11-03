@@ -5,9 +5,7 @@ package BPMN;
  */
 public class Event extends Node
 {
-	enum Strings {
-		ONE, TWO, THREE
-	}
+	String type;
 
 	public Event(String type) {
 		this.type = type;

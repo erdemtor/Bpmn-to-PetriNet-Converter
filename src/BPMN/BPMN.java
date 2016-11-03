@@ -1,19 +1,28 @@
 package BPMN;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @(#) BPMN.BPMN.java
  */
 public class BPMN {
-	private List<Node> nodes;
+	private List<Node> nodes = new ArrayList<>();
 
-	private List<SequenceFlow> flows;
+	private List<SequenceFlow> flows = new ArrayList<>();
 
 	private Compound ownerCompound;
 
 	public List<Node> getNodes() {
 		return nodes;
+	}
+
+	@Override
+	public String toString() {
+		return "BPMN{" +
+				"flows=" + flows +
+				", nodes=" + nodes +
+				'}';
 	}
 
 	public void setNodes(List<Node> nodes) {

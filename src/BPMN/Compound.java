@@ -5,6 +5,10 @@ package BPMN;
  */
 public class Compound extends Task
 {
+	public Compound(String name) {
+		super(name);
+	}
+
 	public BPMN getSubBpmn( ) {
 		return subBpmn;
 	}

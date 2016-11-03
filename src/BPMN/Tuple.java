@@ -1,5 +1,5 @@
 package BPMN;
-
+import Petri.*;
 /**
  * @(#) BPMN.Tuple.java
  */

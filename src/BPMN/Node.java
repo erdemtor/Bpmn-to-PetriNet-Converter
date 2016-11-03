@@ -5,19 +5,12 @@ package BPMN;
  */
 public class Node
 {
-	private BPMN ownerBpmn;
-	
+
 	private SequenceFlow sourceFlow;
 	
 	private SequenceFlow targetFlow;
 
-	public BPMN getOwnerBpmn( ) {
-		return ownerBpmn;
-	}
 
-	public void setOwnerBpmn( BPMN ownerBpmn ) {
-		this.ownerBpmn = ownerBpmn;
-	}
 
 	public SequenceFlow getSourceFlow( ) {
 		return sourceFlow;
