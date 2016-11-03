@@ -7,11 +7,13 @@ import java.util.List;
  * @(#) Petri.Place.java
  */
 public class Place {
-	private List<Transition> outgoingTransitions= new ArrayList<>();
+	private List<Transition> outgoingTransitions= new ArrayList<>();;
+	private List<Transition> incomingTransitions= new ArrayList<>();;
 	private String LABEL;
 	private int Token = 0;
 	private String Type;
 	private Petri ownerPetri;
+
 	public Place(String LABEL, String type, Petri ownerPetri) {
 		this.LABEL = LABEL;
 		Type = type;
@@ -20,9 +22,16 @@ public class Place {
 	}
 
 
-
 	public void setOutgoingTransitions(List<Transition> outgoingTransitions) {
 		this.outgoingTransitions = outgoingTransitions;
+	}
+
+	public List<Transition> getIncomingTransitions() {
+		return incomingTransitions;
+	}
+
+	public void setIncomingTransitions(List<Transition> incomingTransitions) {
+		this.incomingTransitions = incomingTransitions;
 	}
 
 
@@ -55,5 +64,19 @@ public class Place {
 		Type = type;
 	}
 
+	public Petri getOwnerPetri() {
+		return ownerPetri;
+	}
 
+	public void setOwnerPetri(Petri ownerPetri) {
+		this.ownerPetri = ownerPetri;
+	}
+
+	@Override
+	public String toString() {
+		return "Place{" +
+				"Type='" + Type + '\'' +
+				", LABEL='" + LABEL + '\'' +
+				'}';
+	}
 }

@@ -2,6 +2,8 @@ package Petri;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @(#) Petri.Petri.java
@@ -28,10 +30,12 @@ public class Petri
 
 
     public Place firstPlace(){
-        return places.stream()
-                .filter(p -> p.getType().equals("start"))
-                .findFirst()
-                .get();
+        List<Place> placesWithIncoming = transitions.stream()
+                .map(transition -> transition.getTargetPlaces())
+                .flatMap(List::stream)
+                .distinct()
+                .collect(Collectors.toList());
+       return places.stream().filter(place -> !placesWithIncoming.contains(place)).findFirst().get();
     }
 
 

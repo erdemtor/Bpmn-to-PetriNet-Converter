@@ -17,8 +17,12 @@ public class Converter {
     }
     public static Tuple recConvert(Node current) {
         Petri result = new Petri();
-       new Place(current.toString(),"",result);
+        new Place(current.toString(),"start",result);
         while(!(current instanceof Event && current.getType().equals("end"))) {
+            if(current instanceof Event) {
+                current = current.getNextNode();
+                continue;
+            }
             if (current instanceof Gateway) {
                 if (current.getType().contains("split")) {
                     List<Petri> outgoingPetriList = new ArrayList<>();
@@ -32,7 +36,7 @@ public class Converter {
                     appendToPetri(result, outgoingPetriList, current.getType());
                     current = lastJoin;
                 }
-                else if (current.getType().contains("join")) {
+                if (current.getType().contains("join")) {
                     return new Tuple(result, current);
                 }
             }
@@ -41,6 +45,7 @@ public class Converter {
             }
             current = current.getNextNode();
         }
+        new Place(current.toString(),"end",result);
         return new Tuple(result, current);
     }
 
@@ -60,14 +65,14 @@ public class Converter {
         if (splitType.equals("and-split")) {
             Transition andSplitTransition = new Transition("ANDSPLIT",result);
             getLastPlace(result).getOutgoingTransitions().add(andSplitTransition);
-            for(Petri tempPetri : ptrList){
-                getLastTransition(result).getTargetPlaces().add(tempPetri.firstPlace());
+            for(Petri subPetri : ptrList){
+                andSplitTransition.getTargetPlaces().add(subPetri.firstPlace());
             }
             Transition joinTransition = new Transition("ANDJOIN",result);
-            for(Petri tempPetri : ptrList){
-                result.getPlaces().addAll(tempPetri.getPlaces());
-                result.getTransitions().addAll(tempPetri.getTransitions());
-                getLastPlace(tempPetri).getOutgoingTransitions().add(joinTransition);
+            for(Petri subPetri : ptrList){
+                result.getPlaces().addAll(subPetri.getPlaces());
+                result.getTransitions().addAll(subPetri.getTransitions());
+                getLastPlace(subPetri).getOutgoingTransitions().add(joinTransition);
             }
         }
     }

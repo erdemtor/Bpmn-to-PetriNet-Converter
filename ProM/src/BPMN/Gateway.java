@@ -1,5 +1,6 @@
 package BPMN;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,8 +8,8 @@ import java.util.List;
  */
 public class Gateway extends Node
 {
-	private List<SequenceFlow> sourceFlows;
-	private List<SequenceFlow> targetFlows;
+	private List<SequenceFlow> sourceFlows = new ArrayList<>();
+	private List<SequenceFlow> targetFlows = new ArrayList<>();
 	private String type;
 
 	public Gateway(BPMN ownerBpmn, String type) {
@@ -42,7 +43,7 @@ public class Gateway extends Node
 		return targetFlows;
 	}
 
-	public void setTargetFlow(List<SequenceFlow> targetFlow) {
+	public void setTargetFlows(List<SequenceFlow> targetFlow) {
 		this.targetFlows = targetFlow;
 	}
 }
