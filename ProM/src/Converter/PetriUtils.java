@@ -14,8 +14,9 @@ public class PetriUtils {
 
     public static void appendToPetri(Petri result, List<Petri> ptrList, String splitType) {
         if (splitType.equals("xor-split")) {
+            Place lastPlace =  getLastPlace(result);
             for(Petri tempPetri : ptrList){
-                getLastPlace(result).getOutgoingTransitions().addAll(tempPetri.firstPlace().getOutgoingTransitions());
+                lastPlace.getOutgoingTransitions().addAll(tempPetri.firstPlace().getOutgoingTransitions());
             }
             Place joinPlace = new Place("XORJoinPlace","", result);
             for(Petri tempPetri : ptrList){

@@ -44,7 +44,7 @@ public class Application {
            lastFlow.setSourceNode(task);
            task.setTargetFlow(lastFlow);
        }
-        List<SequenceFlow> outFlows = addOutGateway(bpmn,lastFlow,2,"and-split");
+        List<SequenceFlow> outFlows = addOutGateway(bpmn,lastFlow,2,"xor-split");
         int i =1;
         List<SequenceFlow> joiningFlows = new ArrayList<>();
         for (SequenceFlow f: outFlows) {
