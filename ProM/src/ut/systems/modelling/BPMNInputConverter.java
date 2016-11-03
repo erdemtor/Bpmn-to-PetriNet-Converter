@@ -20,7 +20,6 @@ public class BPMNInputConverter {
         Collection<Flow> inputFlows = input.getFlows();
         for (Flow f : inputFlows) {
             SequenceFlow sequenceFlow = new SequenceFlow(bpmn);
-
             handleSource(f, sequenceFlow);
             handleTarget(f, sequenceFlow);
         }
@@ -55,7 +54,7 @@ public class BPMNInputConverter {
 
     private void handleSource(Flow f, SequenceFlow sequenceFlow) {
         if (f.getSource() instanceof org.processmining.models.graphbased.directed.bpmn.elements.Gateway) {
-            Gateway g = new Gateway();
+            Gateway g = new Gateway(bpmn);
             if (((org.processmining.models.graphbased.directed.bpmn.elements.Gateway) f.getSource()).getGatewayType() == org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType.PARALLEL) {
                 g.setType("AND");
             }
@@ -83,27 +82,4 @@ public class BPMNInputConverter {
         }
     }
 
-    private void arrangeGateways(BPMNDiagram input) {
-        Collection<org.processmining.models.graphbased.directed.bpmn.elements.Gateway> inputGateways = input.getGateways();
-        Collection<Flow> inputFlows = input.getFlows();
-        for (org.processmining.models.graphbased.directed.bpmn.elements.Gateway g : inputGateways) {
-            Gateway gateway = new Gateway();
-            if (g.getGatewayType() == org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType.PARALLEL) {// and
-                for (Flow f : inputFlows) {
-                    if (f.getTarget() == g) {
-                        SequenceFlow inFlow = new SequenceFlow();
-                    }
-                }
-            }
-            System.out.println(g.toString());
-        }
-    }
-
-    private void arrangeFlows(BPMNDiagram input) {
-
-    }
-
-    private void arrangeNodes(BPMNDiagram input) {
-
-    }
 }
