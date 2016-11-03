@@ -5,7 +5,6 @@ import BPMN.Gateway;
 import BPMN.Event;
 import BPMN.Node;
 import BPMN.SequenceFlow;
-import de.hpi.bpt.process.GatewayType;
 import org.processmining.models.graphbased.directed.bpmn.BPMNDiagram;
 import org.processmining.models.graphbased.directed.bpmn.BPMNNode;
 import org.processmining.models.graphbased.directed.bpmn.elements.*;
@@ -56,7 +55,7 @@ public class BPMNInputConverter {
                 g.setType("and");
             }
             if (((org.processmining.models.graphbased.directed.bpmn.elements.Gateway) f.getSource()).getGatewayType() == org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType.DATABASED) {
-                g.setType("or");
+                g.setType("xor");
             }
             g.setOwnerBpmn(bpmn);
             g.getTargetFlows().add(sequenceFlow);
