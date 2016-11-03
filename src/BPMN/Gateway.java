@@ -1,10 +1,14 @@
 package BPMN;
 
+import java.util.List;
+
 /**
  * @(#) BPMN.Gateway.java
  */
 public class Gateway extends Node
 {
+	private List<SequenceFlow> sourceFlows;
+	private List<SequenceFlow> targetFlows;
 	private String type;
 
 	public String getType( ) {
@@ -13,5 +17,23 @@ public class Gateway extends Node
 
 	public void setType( String type ) {
 		this.type = type;
+	}
+
+
+	public List<SequenceFlow> getSourceFlows() {
+		return sourceFlows;
+	}
+
+	public void setSourceFlows(List<SequenceFlow> sourceFlow) {
+		this.sourceFlows = sourceFlow;
+	}
+
+
+	public List<SequenceFlow> getTargetFlows() {
+		return targetFlows;
+	}
+
+	public void setTargetFlow(List<SequenceFlow> targetFlow) {
+		this.targetFlows = targetFlow;
 	}
 }
