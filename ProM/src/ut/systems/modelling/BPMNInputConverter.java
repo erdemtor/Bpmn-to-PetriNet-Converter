@@ -15,24 +15,36 @@ import java.util.List;
  */
 public class BPMNInputConverter {
     private BPMN bpmn;
-    BPMNInputConverter(BPMNDiagram input) {
+    private BPMNDiagram input;
+    BPMNInputConverter(BPMNDiagram inputBPMN) {
         bpmn = new BPMN();
+        this.input = inputBPMN;
         Collection<Flow> inputFlows = input.getFlows();
-        for (Flow f : inputFlows) {
+        inputFlows.stream().filter(f -> f.getParent() == null).forEach(f -> {
             SequenceFlow sequenceFlow = new SequenceFlow(bpmn);
-            handleSource(f, sequenceFlow);
-            handleTarget(f, sequenceFlow);
-        }
+            handleSource(f, sequenceFlow, bpmn);
+            handleTarget(f, sequenceFlow, bpmn);
+        });
+        arrangeGatewayTypes(bpmn);
     }
 
-    private void handleTarget(Flow f, SequenceFlow sequenceFlow) {
+    private void arrangeGatewayTypes(BPMN bpmn) {
+        bpmn.getNodes().stream().filter(n -> n instanceof Gateway).filter(g -> ((Gateway)g).getTargetFlows().size() > 1).forEach(splitGate -> splitGate.setType(splitGate.getType() + "-split"));
+        bpmn.getNodes().stream().filter(n -> n instanceof Gateway).filter(g -> ((Gateway)g).getSourceFlows().size() > 1).forEach(splitGate -> splitGate.setType(splitGate.getType() + "-split"));
+    }
+
+    public BPMN getResultBPMN() {
+        return bpmn;
+    }
+
+    private void handleTarget(Flow f, SequenceFlow sequenceFlow, BPMN bpmn) {
         if (f.getTarget() instanceof org.processmining.models.graphbased.directed.bpmn.elements.Gateway) {
             Gateway g = new Gateway(bpmn);
             if (((org.processmining.models.graphbased.directed.bpmn.elements.Gateway) f.getSource()).getGatewayType() == org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType.PARALLEL) {
-                g.setType("AND");
+                g.setType("and");
             }
             if (((org.processmining.models.graphbased.directed.bpmn.elements.Gateway) f.getSource()).getGatewayType() == org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType.DATABASED) {
-                g.setType("OR");
+                g.setType("or");
             }
             g.getSourceFlows().add(sequenceFlow);
             sequenceFlow.setTargetNode(g);
@@ -43,7 +55,17 @@ public class BPMNInputConverter {
             sequenceFlow.setTargetNode(task);
         }
         else if (f.getTarget() instanceof SubProcess) {
-
+            Compound c = new Compound(f.getTarget().getLabel(), bpmn);
+            Collection<Flow> subFlows = input.getFlows((SubProcess) f.getTarget());
+            BPMN subBPMN = new BPMN();
+            subFlows.forEach((flow) -> {
+                SequenceFlow subSF = new SequenceFlow(subBPMN);
+                handleSource(flow, subSF, subBPMN);
+                handleTarget(flow, subSF, subBPMN);
+            });
+            arrangeGatewayTypes(subBPMN);
+            c.setSubBpmn(subBPMN);
+            sequenceFlow.setTargetNode(c);
         }
         else if (f.getTarget() instanceof org.processmining.models.graphbased.directed.bpmn.elements.Event) {
             Event event = new Event("end", bpmn);
@@ -52,14 +74,14 @@ public class BPMNInputConverter {
         }
     }
 
-    private void handleSource(Flow f, SequenceFlow sequenceFlow) {
+    private void handleSource(Flow f, SequenceFlow sequenceFlow, BPMN bpmn) {
         if (f.getSource() instanceof org.processmining.models.graphbased.directed.bpmn.elements.Gateway) {
             Gateway g = new Gateway(bpmn);
             if (((org.processmining.models.graphbased.directed.bpmn.elements.Gateway) f.getSource()).getGatewayType() == org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType.PARALLEL) {
-                g.setType("AND");
+                g.setType("and");
             }
             if (((org.processmining.models.graphbased.directed.bpmn.elements.Gateway) f.getSource()).getGatewayType() == org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType.DATABASED) {
-                g.setType("OR");
+                g.setType("or");
             }
             g.setOwnerBpmn(bpmn);
             g.getTargetFlows().add(sequenceFlow);
@@ -72,7 +94,16 @@ public class BPMNInputConverter {
             sequenceFlow.setSourceNode(task);
         }
         else if (f.getSource() instanceof SubProcess) {
-
+            Compound c = new Compound(f.getSource().getLabel(), bpmn);
+            Collection<Flow> subFlows = input.getFlows((SubProcess) f.getSource());
+            BPMN subBPMN = new BPMN();
+            subFlows.forEach((flow) -> {
+                SequenceFlow subSF = new SequenceFlow(subBPMN);
+                handleSource(flow, subSF, subBPMN);
+                handleTarget(flow, subSF, subBPMN);
+            });
+            c.setSubBpmn(subBPMN);
+            sequenceFlow.setSourceNode(c);
         }
         else if (f.getSource() instanceof org.processmining.models.graphbased.directed.bpmn.elements.Event) {
             Event event = new Event("start", bpmn);

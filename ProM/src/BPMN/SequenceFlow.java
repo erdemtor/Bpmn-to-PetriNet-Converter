@@ -40,5 +40,12 @@ public class SequenceFlow
 		this.sourceNode = sourceNode;
 	}
 
-	
+
+	@Override
+	public String toString() {
+		return "SequenceFlow{" +
+				"targetNode=" + targetNode +
+				", sourceNode=" + sourceNode +
+				'}';
+	}
 }

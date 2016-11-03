@@ -24,8 +24,8 @@ public class BPMN {
     @Override
     public String toString() {
         return "BPMN{" +
-                "flows=" + flows +
-                ", nodes=" + nodes +
+                "flows=" + flows.toString() +
+                ", nodes=" + nodes.toString() +
                 '}';
     }
 
