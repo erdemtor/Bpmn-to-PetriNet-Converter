@@ -5,7 +5,7 @@ package BPMN;
  */
 public class Simple extends Task {
 
-    public Simple(String name) {
-        super(name);
+    public Simple(String name, BPMN bpmn) {
+        super(name, bpmn);
     }
 }

@@ -15,7 +15,8 @@ public class Task extends Node
 		this.name = name;
 	}
 
-	public Task(String name) {
+	public Task(String name, BPMN bpmn) {
+		super(bpmn);
 		this.name = name;
 	}
 }

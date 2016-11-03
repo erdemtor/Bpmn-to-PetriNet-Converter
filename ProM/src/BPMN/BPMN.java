@@ -1,5 +1,8 @@
 package BPMN;
 
+import org.processmining.models.graphbased.directed.bpmn.elements.*;
+import org.processmining.models.shapes.Gate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,57 +11,57 @@ import java.util.stream.Collectors;
  * @(#) BPMN.BPMN.java
  */
 public class BPMN {
-	private List<Node> nodes = new ArrayList<>();
+    private List<Node> nodes = new ArrayList<>();
 
-	private List<SequenceFlow> flows = new ArrayList<>();
+    private List<SequenceFlow> flows = new ArrayList<>();
 
-	private Compound ownerCompound;
+    private Compound ownerCompound;
 
-	public List<Node> getNodes() {
-		return nodes;
-	}
+    public List<Node> getNodes() {
+        return nodes;
+    }
 
-	@Override
-	public String toString() {
-		return "BPMN{" +
-				"flows=" + flows +
-				", nodes=" + nodes +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "BPMN{" +
+                "flows=" + flows +
+                ", nodes=" + nodes +
+                '}';
+    }
 
-	public void setNodes(List<Node> nodes) {
-		this.nodes = nodes;
-	}
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
+    }
 
-	public List<SequenceFlow> getFlows() {
-		return flows;
-	}
+    public List<SequenceFlow> getFlows() {
+        return flows;
+    }
 
-	public void setFlows(List<SequenceFlow> flows) {
-		this.flows = flows;
-	}
+    public void setFlows(List<SequenceFlow> flows) {
+        this.flows = flows;
+    }
 
-	public Compound getOwnerCompound() {
-		return ownerCompound;
-	}
+    public Compound getOwnerCompound() {
+        return ownerCompound;
+    }
 
-	public void setOwnerCompound(Compound ownerCompound) {
-		this.ownerCompound = ownerCompound;
-	}
+    public void setOwnerCompound(Compound ownerCompound) {
+        this.ownerCompound = ownerCompound;
+    }
 
-	public void addNode(Node node) {
-		nodes.add(node);
-	}
+    public void addNode(Node node) {
+        nodes.add(node);
+    }
 
-	public Event getStartEvent(){
-
-		return (Event) this.getNodes().stream().filter(n -> {
-			if (n instanceof Event){
-				Event e = (Event) n;
-				return e.type.equals("start");
-			}
-			return false;
-		}).collect(Collectors.toList()).get(0);
-	}
+    public Event getStartEvent(){
+        return (Event) this.getNodes().stream().filter(this::isStartEvent).findFirst().get();
+    }
+    private boolean isStartEvent(Node n){
+        if (n instanceof Event){
+            Event e = (Event) n;
+            return e.type.equals("start");
+        }
+        return false;
+    }
 }
 

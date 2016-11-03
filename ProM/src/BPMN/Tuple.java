@@ -23,4 +23,9 @@ public class Tuple
 	public void setCurrent( Node current ) {
 		this.current = current;
 	}
+
+	public Tuple(Petri petri, Node current) {
+		this.petri = petri;
+		this.current = current;
+	}
 }

@@ -1,16 +1,24 @@
 package Petri;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @(#) Petri.Place.java
  */
 public class Place {
-	private List<Transition> outgoingTransitions;
-	private List<Transition> incomingTransitions;
+	private List<Transition> outgoingTransitions= new ArrayList<>();;
+	private List<Transition> incomingTransitions= new ArrayList<>();;
 	private String LABEL;
-	private int Token;
+	private int Token = 0;
 	private String Type;
+
+	public Place(String LABEL, String type, Petri ownerPetri) {
+		this.LABEL = LABEL;
+		Type = type;
+		this.ownerPetri = ownerPetri;
+	}
+
 	private Petri ownerPetri;
 
 	public void setOutgoingTransitions(List<Transition> outgoingTransitions) {

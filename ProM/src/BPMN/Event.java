@@ -5,9 +5,8 @@ package BPMN;
  */
 public class Event extends Node
 {
-	String type;
-
-	public Event(String type) {
+	public Event(String type, BPMN bpmn) {
+		super(bpmn);
 		this.type = type;
 	}
 }

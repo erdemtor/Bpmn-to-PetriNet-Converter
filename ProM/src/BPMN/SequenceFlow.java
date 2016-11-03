@@ -5,16 +5,21 @@ package BPMN;
  */
 public class SequenceFlow
 {
-	
+	public BPMN getOwnerBpmn() {
+		return ownerBpmn;
+	}
+
+	public void setOwnerBpmn(BPMN ownerBpmn) {
+		this.ownerBpmn = ownerBpmn;
+	}
+
+	private BPMN ownerBpmn;
 	private Node targetNode;
 	
 	private Node sourceNode;
 
 
-
-
-
-	public Node getTargetNode( ) {
+	public Node getTargetNode() {
 		return targetNode;
 	}
 
@@ -22,7 +27,7 @@ public class SequenceFlow
 		this.targetNode = targetNode;
 	}
 
-	public Node getSourceNode( ) {
+	public Node getSourceNode() {
 		return sourceNode;
 	}
 
@@ -30,10 +35,5 @@ public class SequenceFlow
 		this.sourceNode = sourceNode;
 	}
 
-	public Node getTarget( )
-	{
-		return null;
-	}
-	
 	
 }

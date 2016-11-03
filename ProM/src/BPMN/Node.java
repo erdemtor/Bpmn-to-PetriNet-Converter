@@ -9,7 +9,20 @@ public class Node
 		return ownerBpmn;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	String type= "";
 	public void setOwnerBpmn(BPMN ownerBpmn) {
+		this.ownerBpmn = ownerBpmn;
+	}
+
+	public Node(BPMN ownerBpmn) {
 		this.ownerBpmn = ownerBpmn;
 	}
 
@@ -18,7 +31,9 @@ public class Node
 	
 	private SequenceFlow targetFlow;
 
-
+	public Node getNextNode(){
+		return this.getTargetFlow().getTargetNode();
+	}
 	public SequenceFlow getSourceFlow( ) {
 		return sourceFlow;
 	}

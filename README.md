@@ -1,1 +1,0 @@
-# Bpmn-to-PetriNet-Converter
