@@ -1,5 +1,6 @@
 package ut.systems.modelling;
 
+import BPMN.*;
 import org.processmining.contexts.uitopia.UIPluginContext;
 import org.processmining.contexts.uitopia.annotations.UITopiaVariant;
 import org.processmining.framework.plugin.annotations.Plugin;
@@ -28,7 +29,8 @@ public class ConverterPlugin {
     public static Petrinet optimizeDiagram(UIPluginContext context, BPMNDiagram diagram) {
         Petrinet pn = null;
         BPMNInputConverter converter = new BPMNInputConverter(diagram);
-        // BPMN bpmn = converter.getBPMN();
+        BPMN bpmn = converter.getResultBPMN();
+        System.out.println(bpmn.toString());
 //        MyBPMNModel myBPMNModel = getMyBPMNModel(diagram);
 //        pn = MyConverter.getPN(myBPMNModel);
 

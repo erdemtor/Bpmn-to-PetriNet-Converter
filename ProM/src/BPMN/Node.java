@@ -50,4 +50,11 @@ public class Node
 	public void setTargetFlow( SequenceFlow targetFlow ) {
 		this.targetFlow = targetFlow;
 	}
+
+	@Override
+	public String toString() {
+		return "Node{" +
+				"type='" + type + '\'' +
+				'}';
+	}
 }
