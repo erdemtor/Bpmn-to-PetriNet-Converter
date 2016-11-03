@@ -19,23 +19,10 @@ public class Application {
         BPMN bpmn = createFullBpmn();
         System.out.println();
         Petri p = Converter.convert(bpmn);
-        traverse(p.firstPlace());
+        System.out.println();
 
     }
-    public static  void traverse(Place current) {
-        System.out.println(traverseString(current));
-    }
 
-    public static String traverseString(Place current){
-        List<Transition> outGoingTransitions = current.getOutgoingTransitions();
-        String res = current.toString();
-        for (Transition t_out: outGoingTransitions) {
-            for (Place p :  t_out.getTargetPlaces()) {
-                res += traverseString(p);
-            }
-        }
-        return res;
-    }
     public static BPMN createFullBpmn(){
         BPMN bpmn = new BPMN();
         SequenceFlow lastFlow = initializer(bpmn);
