@@ -48,12 +48,14 @@ public class PetriUtils {
             Petri smallPetri = Converter.convert(((Compound) current).getSubBpmn());
             petri.setPlaces(Stream.concat(petri.getPlaces().stream(), smallPetri.getPlaces().stream()).collect(Collectors.toList()));
             petri.setTransitions(Stream.concat(petri.getTransitions().stream(), smallPetri.getTransitions().stream()).collect(Collectors.toList()));
-            Transition connector = new Transition("connector", petri);
+            Transition connector = new Transition("invisible", petri);
             connector.getTargetPlaces().add(smallPetri.firstPlace());
             getLastPlace(petri).getOutgoingTransitions().add(connector);
             petri.getTransitions().add(connector);
         } else {
-            Transition tra = new Transition(current.toString(),petri);
+            String label= current.toString();
+            if(current instanceof Task) label = ((Task) current).getName();
+            Transition tra = new Transition(label,petri);
             Place plc = new Place(current.toString(),"", petri);
             tra.getTargetPlaces().add(plc);
             getLastPlace(petri).getOutgoingTransitions().add(tra);
