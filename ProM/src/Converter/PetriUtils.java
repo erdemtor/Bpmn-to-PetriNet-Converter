@@ -17,12 +17,13 @@ public class PetriUtils {
             for(Petri tempPetri : ptrList){
                 getLastPlace(result).getOutgoingTransitions().addAll(tempPetri.firstPlace().getOutgoingTransitions());
             }
-            Place joinPlace = new Place("JoinPlace","", result);
+            Place joinPlace = new Place("XORJoinPlace","", result);
             for(Petri tempPetri : ptrList){
                 result.getPlaces().addAll(tempPetri.getPlaces());
                 result.getTransitions().addAll(tempPetri.getTransitions());
-                removeLastPlace(tempPetri);
-                getLastTransition(tempPetri).getTargetPlaces().add(joinPlace);
+                Transition xorTransition = new Transition("xor-invisible",result);
+                getLastPlace(result).getOutgoingTransitions().add(xorTransition);
+                xorTransition.getTargetPlaces().add(tempPetri.firstPlace());
             }
         }
         if (splitType.equals("and-split")) {
