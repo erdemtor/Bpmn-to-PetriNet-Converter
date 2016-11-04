@@ -1,4 +1,5 @@
 package ut.systems.modelling;
+import Converter.PetriUtils;
 import org.processmining.models.graphbased.directed.petrinet.Petrinet;
 import org.processmining.models.graphbased.directed.petrinet.elements.*;
 import org.processmining.models.graphbased.directed.petrinet.impl.PetrinetImpl;
@@ -14,9 +15,9 @@ class PetriOutputConverter {
     private HashMap<Petri.Place, Place> places = new HashMap<>();
     private HashMap<Petri.Transition, Transition> transitions = new HashMap<>();
     PetriOutputConverter(Petri.Petri petri) {
-        Place p1 = petrinet.addPlace(petri.firstPlace().getLABEL());
-        places.put(petri.firstPlace(), p1);
-        traverseStartingFrom(petri.firstPlace(), petrinet, p1);
+        Place p1 = petrinet.addPlace(PetriUtils.firstPlace(petri).getLABEL());
+        places.put(PetriUtils.firstPlace(petri), p1);
+        traverseStartingFrom(PetriUtils.firstPlace(petri), petrinet, p1);
     }
 
     PetrinetImpl getResultPetri() {

@@ -54,15 +54,6 @@ public class BPMN {
         nodes.add(node);
     }
 
-    public Event getStartEvent(){
-        return (Event) this.getNodes().stream().filter(this::isStartEvent).findFirst().get();
-    }
-    private boolean isStartEvent(Node n){
-        if (n instanceof Event){
-            Event e = (Event) n;
-            return e.type.equals("start");
-        }
-        return false;
-    }
+
 }
 

@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Converter {
-    public static Petri convert(BPMN bpmn){
-        return recConvert(bpmn.getStartEvent()).getPetri();
+    public static Petri convert(Node startNode){
+        return recConvert(startNode).getPetri();
     }
 
-    public static Tuple recConvert(Node current) {
+    private static Tuple recConvert(Node current) {
         Petri result = new Petri();
         new Place(current.toString(),"start",result);
         while(true) {
@@ -33,7 +33,7 @@ public class Converter {
                         Node next = flow.getTargetNode();
                         Tuple myTuple = recConvert(next);
                         Petri subPetriBranch =myTuple.getPetri();
-                        subPetriBranch.firstPlace().setLABEL("");
+                        PetriUtils.firstPlace(subPetriBranch).setLABEL("");
                         outgoingPetriList.add(subPetriBranch);
                         lastJoin = myTuple.getCurrent();
                     }

@@ -32,7 +32,7 @@ public class ConverterPlugin {
         Petrinet pn = null;
         BPMNInputConverter inputConverter = new BPMNInputConverter(diagram);
         BPMN bpmn = inputConverter.getResultBPMN();
-        Petri ptr = Converter.convert(bpmn);
+        Petri ptr = Controller.convertToPetri(bpmn);
         PetriOutputConverter ptro = new PetriOutputConverter(ptr);
         pn = ptro.getResultPetri();
 

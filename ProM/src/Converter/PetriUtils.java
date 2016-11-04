@@ -16,7 +16,7 @@ public class PetriUtils {
         if (splitType.equals("xor-split")) {
             Place lastPlace =  getLastPlace(result);
             for(Petri tempPetri : ptrList){
-                lastPlace.getOutgoingTransitions().addAll(tempPetri.firstPlace().getOutgoingTransitions());
+                lastPlace.getOutgoingTransitions().addAll(firstPlace(tempPetri).getOutgoingTransitions());
             }
             Place joinPlace = new Place("XORJoinPlace","", result);
             for(Petri tempPetri : ptrList){
@@ -30,7 +30,7 @@ public class PetriUtils {
             Transition andSplitTransition = new Transition("ANDSPLIT",result);
             getLastPlace(result).getOutgoingTransitions().add(andSplitTransition);
             for(Petri subPetri : ptrList){
-                andSplitTransition.getTargetPlaces().add(subPetri.firstPlace());
+                andSplitTransition.getTargetPlaces().add(firstPlace(subPetri));
             }
             Transition joinTransition = new Transition("ANDJOIN",result);
             Place afterJoin = new Place("afterJoin","",result);
@@ -46,11 +46,11 @@ public class PetriUtils {
     public static void convertAndAdd(Petri petri, Node current) {
         if(current == null) return;
         if (current instanceof Compound) {
-            Petri smallPetri = Converter.convert(((Compound) current).getSubBpmn());
+            Petri smallPetri = Controller.convertToPetri(((Compound) current).getSubBpmn());
             petri.setPlaces(Stream.concat(petri.getPlaces().stream(), smallPetri.getPlaces().stream()).collect(Collectors.toList()));
             petri.setTransitions(Stream.concat(petri.getTransitions().stream(), smallPetri.getTransitions().stream()).collect(Collectors.toList()));
             Transition connector = new Transition("invisible", petri);
-            connector.getTargetPlaces().add(smallPetri.firstPlace());
+            connector.getTargetPlaces().add( firstPlace(smallPetri));
             getLastPlace(petri).getOutgoingTransitions().add(connector);
             petri.getTransitions().add(connector);
         } else {
@@ -83,7 +83,14 @@ public class PetriUtils {
         }
         return null;
     }
-
+    public static Place firstPlace(Petri petri){
+        List<Place> placesWithIncoming = petri.getTransitions().stream()
+                .map(transition -> transition.getTargetPlaces())
+                .flatMap(List::stream)
+                .distinct()
+                .collect(Collectors.toList());
+        return petri.getPlaces().stream().filter(place -> !placesWithIncoming.contains(place)).findFirst().get();
+    }
     public static void removeLastPlace(Petri petri){
         Place last = getLastPlace(petri);
         petri.getPlaces().remove(last);

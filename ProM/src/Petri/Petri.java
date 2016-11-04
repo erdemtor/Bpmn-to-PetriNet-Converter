@@ -28,14 +28,7 @@ public class Petri
     }
 
 
-    public Place firstPlace(){
-        List<Place> placesWithIncoming = transitions.stream()
-                .map(transition -> transition.getTargetPlaces())
-                .flatMap(List::stream)
-                .distinct()
-                .collect(Collectors.toList());
-       return places.stream().filter(place -> !placesWithIncoming.contains(place)).findFirst().get();
-    }
+
 
 
 
