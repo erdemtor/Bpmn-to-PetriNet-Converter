@@ -62,14 +62,7 @@ public class PetriUtils {
             getLastPlace(petri).getOutgoingTransitions().add(tra);
         }
     }
-    public static Place getStartPlace(Petri petri) {
-        for(Place plc : petri.getPlaces()) {
-            if (plc.getType().equals("start")){
-                return plc;
-            }
-        }
-        return null;
-    }
+
     public static Place getLastPlace(Petri petri){
         for(Place plc : petri.getPlaces()) {
             if (plc.getOutgoingTransitions().size() == 0)	return plc;
