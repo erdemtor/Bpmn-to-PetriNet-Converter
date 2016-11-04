@@ -116,7 +116,7 @@ public class BPMNInputConverter {
                 g.setType("and");
             }
             if (((org.processmining.models.graphbased.directed.bpmn.elements.Gateway) f.getTarget()).getGatewayType() == org.processmining.models.graphbased.directed.bpmn.elements.Gateway.GatewayType.DATABASED) {
-                g.setType("or");
+                g.setType("xor");
             }
             g.getSourceFlows().add(sequenceFlow);
             sequenceFlow.setTargetNode(g);
